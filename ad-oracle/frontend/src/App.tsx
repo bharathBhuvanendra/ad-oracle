@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    setSelectedFile(file);
+  };
+
+  const handleUpload = async () => {
+  if (!selectedFile) return;
+
+  const formData = new FormData();
+  formData.append("file", selectedFile);
+
+  try {
+    const response = await fetch("http://localhost:3001/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log("Server response:", data);
+  } catch (error) {
+    console.error("Upload error:", error);
+  }
+};
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+      <h1>Ad Oracle</h1>
+      <p>Upload an ad image and get AI-powered creative insights.</p>
+
+      <div style={{ marginTop: "1.5rem" }}>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+      <button onClick={handleUpload} style={{ marginTop: "1rem" }}>
+      Upload
+      </button>
+
+      <div style={{ marginTop: "1rem" }}>
+        {selectedFile ? (
+          <p>
+            Selected file: <strong>{selectedFile.name}</strong>
+          </p>
+        ) : (
+          <p>No file selected yet.</p>
+        )}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

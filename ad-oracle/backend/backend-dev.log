@@ -1,0 +1,10 @@
+
+> backend@1.0.0 dev
+> ts-node-dev src/index.ts
+
+[INFO] 03:39:45 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.9.3)
+Server running on http://localhost:3001
+Received file: Windows script scrnsht.jpg
+Received file: Windows script scrnsht.jpg
+Received file: vite.svg
+Received file: Windows script scrnsht.jpg
