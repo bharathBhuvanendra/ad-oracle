@@ -1,3 +1,5 @@
+//Root File
+
 import { useState } from "react";
 
 function App() {
@@ -8,7 +10,7 @@ function App() {
     setSelectedFile(file);
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async () => {~
   if (!selectedFile) return;
 
   const formData = new FormData();
@@ -16,7 +18,7 @@ function App() {
 
   try {
     const response = await fetch("http://localhost:3001/upload", {
-      method: "POST",
+      method: "POST",~
       body: formData,
     });
 
